@@ -1,5 +1,10 @@
 ﻿@model List<Category>
+@section Title {Categories}
+@section SubTitle {Show}
+@section button{
 
+    <a asp-controller="Categories" asp-action="Create" class="btn btn-primary ">Create</a>
+}
 @if (!Model.Any())
 {
     <div class="alert alert-danger alert-dismissible">
@@ -10,12 +15,13 @@
 }
 else
 {
-    
+     <div class="card-body w-100">
 <table class="table table-bordered">
     <thead>
         <tr>
             <th style="width: 10px">#</th>
-            <th>Name</th>
+            <th>Name</th
+                <th>Actions</th>
           
         </tr>
     </thead>
@@ -25,12 +31,14 @@ else
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
+                    <td><a asp-controller="Categories" asp-action="Edit" asp-route-id="@item.Id" >Edit</a></td>
                 </tr>
             }
           
     
     </tbody>
 </table>
+</div>
 }
 
 
