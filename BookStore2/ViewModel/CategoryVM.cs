@@ -7,6 +7,8 @@ namespace BookStore2.ViewModel
         public int Id { get; set; }
         [Required (ErrorMessage ="Plz insert the name of Category")]
         [MaxLength(30)]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } 
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
+        public DateTime UpdatedOn { get; set; } = DateTime.Now;
     }
 }

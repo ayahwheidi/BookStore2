@@ -15,4 +15,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.24" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="micr" /></VisualStudio></ProjectExtensions>
+
 </Project>

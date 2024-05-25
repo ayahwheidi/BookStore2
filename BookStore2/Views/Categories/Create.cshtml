@@ -1,14 +1,16 @@
 ﻿@using BookStore2.ViewModel
 
 @section Title {
+   
 Categories
+}
+@section SubTitle {
+    @(Model?.Id==null ? "Create" : "Edit")
 }
 @model  CategoryVM
 
 <div class="card card-primary">
-    <div class="card-header">
-        <h3 class="card-title">Create category</h3>
-    </div>
+   
 
     
     <form asp-controller="Categories" >
@@ -22,7 +24,10 @@ Categories
         </div>
 
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-primary">
+
+                @(Model?.Id==null?"Add":"Update")
+                </button>
         </div>
     </form>
 </div>

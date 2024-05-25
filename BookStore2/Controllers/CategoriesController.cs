@@ -42,18 +42,39 @@ namespace BookStore2.Controllers
             
         }
         [HttpGet]
-        public IActionResult Edit (  )
+        public IActionResult Edit ( int id  )
         {
-            //ما حددنا شو اسم الاكشن الي يروح عليه لما نعمل كبسة سب مت والتنين بودو عا كريت فيو فا باخد اسم ال اكشن الي وداه عليها هو بكتبه   
-            return View("create");
+
+            //  return Content($"{id}");
+            //ما حددنا شو اسم الاكشن الي يروح عليه لما نعمل كبسة سب مت والتنين بودو عا كريت فيو فا باخد اسم ال اكشن الي وداه عليها هو بكتبه
+            //
+            // بدي اجيب الداتا من الدالتا بيس عشان اخد الاسم واحطه جوا الانبت لما يعمل ابديت
+            var category = context.Categories.Find(id);
+            if(category is null)
+            {
+                return NotFound();
+            }
+            var ViewModel = new CategoryVM
+            {
+                Id = id,
+                Name = category.Name
+            };
+            //هون بعتنا ال رفيومودل عشان يحط القيمو جاو الانبت
+            return View("create",ViewModel);
 
         }
         [HttpPost]
         public IActionResult Edit ( CategoryVM categoryVm)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Create", categoryVm);
+                
+            }
             var category = context.Categories.Find(categoryVm.Id);
             if (category == null)
             {
+                return NotFound();
 
             }
             category.Name = categoryVm.Name;
@@ -62,5 +83,36 @@ namespace BookStore2.Controllers
             return RedirectToAction("Index");
             
         }
+
+        public IActionResult Details(int id)
+        {
+            var category = context.Categories.Find(id);
+            if(category is null)
+            {
+                return NotFound();
+            }
+            var viewModel = new CategoryVM
+            {
+                Id = id,
+                Name = category.Name,
+                CreatedOn=category.CreatedOn,
+                UpdatedOn=category.UpdatedOn
+            };
+
+            return View(viewModel);
+        }
+        public IActionResult Delete(int Id)
+        {
+            var category = context.Categories.Find(Id);
+            if(category is null)
+            {
+                return NotFound();
+            }
+            context.Remove(category);
+            context.SaveChanges();
+            // return RedirectToAction("Index");
+            return Ok();
+        }
+
     }
 }
