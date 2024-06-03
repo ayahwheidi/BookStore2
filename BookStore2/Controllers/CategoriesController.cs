@@ -2,6 +2,7 @@
 using BookStore2.Models;
 using BookStore2.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BookStore2.Controllers
 {
@@ -15,9 +16,18 @@ namespace BookStore2.Controllers
         }
        
         public IActionResult Index()
+
         {
             var categories = context.Categories.ToList();
-            return View(categories);
+            var categoriesVm = categories.Select(category => new CategoryVM
+            {
+                Id=category.Id,
+                Name=category.Name,
+                CreatedOn=category.CreatedOn,
+                UpdatedOn=category.UpdatedOn
+
+            }).ToList();
+            return View(categoriesVm);
         }
         [HttpGet]
         public IActionResult Create()
@@ -28,19 +38,29 @@ namespace BookStore2.Controllers
         public IActionResult Create(CategoryVM categoryVM)
         {
             if (!ModelState.IsValid)
-            {
+            {//باخد معه الايرور الي عمله  ال بموجودة في categoryVM الي انا كتبتها اصلا غلط
                 return View("Create", categoryVM);
             }
+
             var category = new Category()
             {
                 Name = categoryVM.Name
             };
-
-            context.Categories.Add(category);
-            context.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                context.Categories.Add(category);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                // الهون ال "" خلتني لما يصير في ايرور يضيف عليه هاد validation error
+                ModelState.AddModelError("Name", " the Category name is already exsista");
+                return View("Create", categoryVM);
+            }
             
         }
+
         [HttpGet]
         public IActionResult Edit ( int id  )
         {
@@ -112,6 +132,11 @@ namespace BookStore2.Controllers
             context.SaveChanges();
             // return RedirectToAction("Index");
             return Ok();
+        }
+        public IActionResult checkName(CategoryVM categoryVm)
+        {
+            var isExsist = context.Categories.Any(e => e.Name == categoryVm.Name);
+            return Json(isExsist);
         }
 
     }

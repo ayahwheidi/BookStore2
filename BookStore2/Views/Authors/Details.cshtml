@@ -1,0 +1,34 @@
+﻿@using BookStore2.ViewModel
+
+@model AuthorVM
+@section Title {
+
+Auther
+}
+@section SubTitle {
+    Details
+}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+
+            <th>Name</th>
+            <th>Created on</th>
+            <th>Updated on</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+
+            <td>@Model.Name</td>
+            <td>@Model.CreatedOn</td>
+            <td>@Model.UpdatedOn</td>
+
+        </tr>
+
+
+
+    </tbody>
+</table>
