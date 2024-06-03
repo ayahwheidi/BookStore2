@@ -13,7 +13,7 @@ Show
 }
 @if (!Model.Any())
 {
-    <div class="alert alert-danger alert-dismissible">
+    <div class="alert alert-danger alert-dismissible " >
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         <h5><i class="icon fas fa-ban"></i> Alert!</h5>
       No data
@@ -22,7 +22,12 @@ Show
 else
 {
      <div class="card-body  ">
-<table class="table table-bordered">
+        <div class="alert alert-danger alert-dismissible js-alert" hidden>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+            No data
+        </div>
+        <table class="table table-bordered js-table "  >
     <thead>
         <tr>
             <th style="width: 10px">#</th>
@@ -65,7 +70,7 @@ else
     <script>
 
         document.querySelectorAll(".js-delete").forEach((btn) => {
-
+        ;
             btn.addEventListener("click", async () => {
                 //sweet alert code
                 Swal.fire({
@@ -84,6 +89,11 @@ else
                         //console.log(id);
                         const response = await fetch(`/Authors/Delete/${id}`, { method: 'POST' });
                         if (response.ok) {
+                            if (document.querySelectorAll(".js-delete").length == 1) {
+                                 document.querySelector(".js-table").setAttribute("hidden","")
+                                document.querySelector(".js-alert").removeAttribute("hidden")
+                            }
+                           
                             btn.closest("tr").remove();
                             const Toast = Swal.mixin({
                                 toast: true,
