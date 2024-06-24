@@ -10,8 +10,12 @@ Show
 }
 
 @section button {
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-controller="Books" asp-action="Create" class="btn btn-primary ">Create</a>
+    }
 
-    <a asp-controller="Books" asp-action="Create" class="btn btn-primary ">Create</a>
+ 
 }
 @if (!Model.Any())
 {
@@ -33,8 +37,13 @@ else
                     <th>Puplisher</th>
                     <th>Puplisher Date</th>
                     <th>Image</th>
-                    <th>Actions</th>
                     <th>Categories</th>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <th>Actions</th>
+                    }
+                    
+                  
 
                 </tr>
             </thead>
@@ -50,21 +59,24 @@ else
                         <td> <img src="~/img/book_img/@item.ImageUrl" width="50px" /></td>
 
                         <td> @string.Join(", ", @item.Categories)</td>
-                        
-                        <td style="width:250px">
-                            <a class="btn btn-sm btn-primary asp-controller="Authors" asp-action="Edit" asp-route-id="@item.Id">
-                                <i class="fas fa-edit"></i>
-                                Edit
-                            </a>
-                            <a class="btn btn-sm btn-info" asp-controller="Authors" asp-action="Details" asp-route-id="@item.Id">
-                                <i class="fas fa-info-circle"></i> Details
-                            </a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <td style="width:250px">
+                                <a class="btn btn-sm btn-primary asp-controller="Authors" asp-action="Edit" asp-route-id="@item.Id">
+                                    <i class="fas fa-edit"></i>
+                                    Edit
+                                </a>
+                                <a class="btn btn-sm btn-info" asp-controller="Authors" asp-action="Details" asp-route-id="@item.Id">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </a>
 
 
-                            <a class="btn btn-sm btn-danger " asp-controller="Books" asp-action="Delete" asp-route-id="@item.Id"> <i class="fas fa-trash-alt"></i> Delete</a>
+                                <a class="btn btn-sm btn-danger " asp-controller="Books" asp-action="Delete" asp-route-id="@item.Id"> <i class="fas fa-trash-alt"></i> Delete</a>
 
 
-                        </td>
+                            </td>
+                        }
+                       
 
 
                     </tr>

@@ -1,0 +1,98 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<h1>@ViewData["Title"]</h1>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Log in</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+
+    <link rel="stylesheet" href="~/Dashboard/plugins/fontawesome-free/css/all.min.css">
+
+    <link rel="stylesheet" href="~/Dashboard/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+
+
+    <link rel="stylesheet" href="~/Dashboard/dist/css/adminlte.min.css">
+</head>
+<body class="login-page" style="min-height: 495.6px;">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Book</b></a>
+        </div>
+
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+                <form id="account" method="post">
+                    <h2>Use a local account to log in.</h2>
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-floating">
+                        <label asp-for="Input.UserName" class="form-label"></label>
+                        <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="User Name" />
+                        
+                        <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating">
+                        <label asp-for="Input.Password" class="form-label"></label>
+                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Password"  />
+                      
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <div class="checkbox">
+                            <label asp-for="Input.RememberMe" class="form-label">
+                                <input class="form-check-input" asp-for="Input.RememberMe" />
+                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    </div>
+                    <div>
+                        <p>
+                            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                        </p>
+                        
+                        <p>
+                            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                        </p>
+                    </div>
+                </form>
+
+
+                <p class="mb-1">
+                    <a href="forgot-password.html">I forgot my password</a>
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="~/Dashboard/plugins/jquery/jquery.min.js"></script>
+
+    <script src="~/Dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/Dashboard/dist/js/adminlte.min.js?v=3.2.0"></script>
+
+
+</body>
+</html>
+
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

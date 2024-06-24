@@ -23,7 +23,7 @@ namespace BookStore2.ViewModel
 
         [Display(Name = "Select Categories")]
         //هاي رح ابعتها لل داتا بيس عشان يعرف ال اي دي للكاتيجوري
-        public List<int> SelectedCategories { get; set; }
+        public List<int> SelectedCategories { get; set; } = new List<int>();
         //the same!! ??
         public List<SelectListItem>? Categories { get; set; }
         

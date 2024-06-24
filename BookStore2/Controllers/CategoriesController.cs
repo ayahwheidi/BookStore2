@@ -1,4 +1,5 @@
-﻿using BookStore2.Data;
+﻿using AutoMapper;
+using BookStore2.Data;
 using BookStore2.Models;
 using BookStore2.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -9,25 +10,32 @@ namespace BookStore2.Controllers
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext context;
+        private readonly IMapper mapper;
 
-        public CategoriesController(ApplicationDbContext context)
+        public CategoriesController(ApplicationDbContext context,IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
        
         public IActionResult Index()
 
         {
             var categories = context.Categories.ToList();
-            var categoriesVm = categories.Select(category => new CategoryVM
+
+            // auto mapper method
+            var viewModel = mapper.Map<List<CategoryVM>>(categories);
+
+
+            /*var categoriesVm = categories.Select(category => new CategoryVM
             {
                 Id=category.Id,
                 Name=category.Name,
                 CreatedOn=category.CreatedOn,
                 UpdatedOn=category.UpdatedOn
 
-            }).ToList();
-            return View(categoriesVm);
+            }).ToList();*/
+            return View(viewModel);
         }
         [HttpGet]
         public IActionResult Create()
@@ -42,10 +50,13 @@ namespace BookStore2.Controllers
                 return View("Create", categoryVM);
             }
 
-            var category = new Category()
+            //by Auto mapper
+
+            var category = mapper.Map<Category>(categoryVM);
+            /*var category = new Category()
             {
                 Name = categoryVM.Name
-            };
+            };*/
             try
             {
                 context.Categories.Add(category);

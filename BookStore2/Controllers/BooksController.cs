@@ -1,12 +1,14 @@
 ﻿using BookStore2.Data;
 using BookStore2.Models;
 using BookStore2.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore2.Controllers
 {
+    [Authorize]
     public class BooksController : Controller
     {
         private readonly ApplicationDbContext context;
@@ -17,6 +19,8 @@ namespace BookStore2.Controllers
             this.context = context;
             this.webHostEnvironment = webHostEnvironment;
         }
+        
+        //[AllowAnonymous]
         public IActionResult Index()
         {
             var books = context.Books.
@@ -48,7 +52,7 @@ Categories=book.Categories.Select(e=>e.Category.Name).ToList()
 
 
         }
-        
+       
         public IActionResult Create()
         {
             var authors = context.Autors.ToList();
